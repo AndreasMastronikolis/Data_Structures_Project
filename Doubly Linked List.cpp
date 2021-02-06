@@ -24,7 +24,7 @@ template <class Entry_Type> class SL_List
 			(*New_SL_Node).Next = Head;
 			Head = New_SL_Node;
 		}
-		void Delete_Tail() // Διαγραφή του τελευταίου Node
+		void Delete_Tail()
 		{
 			SL_Node<Entry_Type>* current, previous = NULL;
 			current = Head;
@@ -105,7 +105,7 @@ template <class Entry_Type> class SL_List
 				(*temp).Next = Iterator;
 			}
 		}
-		void Delete(int position) // Διαγραφή του Node που βρίσκεται στην θέση position της λίστας.
+		void Delete(int position)
 		{
 			SL_Node<Entry_Type>* Iterator, previous;
 			int size = (*this).Get_Size();
@@ -272,16 +272,16 @@ template <class Entry_Type> class SL_List
 			}
 			return counter;
 		}
-		int Get_Size() // Επιστρέφει το μέγεθος της συνδεδεμένης λίστας.
+		int Get_Size()
 		{
 			return Size;
 		}
-		bool is_Empty() // Επιστρέφει αληθής/ψευδής για το άν η λίστα είναι άδεια η όχι.
+		bool is_Empty()
 		{
 			if (Head == NULL && Tail == NULL) return true;
 			else return false;
 		}
-		bool Does_Contain(int value) // Επιστρέφει αληθής/ψευδής για τον αν η λίστα περιέχει Node με τιμή value.
+		bool Does_Contain(int value)
 		{
 			SL_Node<Entry_Type>* Iterator;
 			Iterator = Head;
@@ -296,7 +296,7 @@ template <class Entry_Type> class SL_List
 			if (position < (*this).Get_Size()) return true;
 			else return false;
 		}
-		Entry_Type Get_Max() // Επιστρέφει την μέγιστη τιμή μιας λίστας.
+		Entry_Type Get_Max()
 		{
 			int Maximum_Int;
 			Maximum_Int = INT32_MIN;
@@ -309,7 +309,7 @@ template <class Entry_Type> class SL_List
 			}
 			return Maximum_Int;
 		}
-		Entry_Type Get_Min() // Επιστρέφει την ελάχιστη τιμή μιας λίστας.
+		Entry_Type Get_Min()
 		{
 			int Maximum_Int;
 			Maximum_Int = INT32_MAX;
@@ -322,7 +322,7 @@ template <class Entry_Type> class SL_List
 			}
 			return Maximum_Int;
 		}
-		bool is_Sorted() // Επιστρέφει ψευδής/αληθής για το αν η λίστα είναι ταξινομημένη η όχι.
+		bool is_Sorted()
 		{
 			int x = INT32_MIN;
 			SL_Node<Entry_Type>* Iterator;
@@ -628,7 +628,7 @@ template <class Entry_Type> class DL_List
 			}
 			return true;
 		}
-		bool is_Empty() // Επιστρέφει αληθής/ψευδής για το άν η λίστα είναι άδεια η όχι.
+		bool is_Empty()
 		{
 			if (Head == NULL && Tail == NULL) return true;
 			else return false;
@@ -766,7 +766,7 @@ template <class Entry_Type> class Queue
 		}
 };
 
-template <class Entry_Type> SL_List<Entry_Type> Copy(SL_List<Entry_Type> List) // Επιστρέφει μια συνδεδεμένη λίστα, η οποία είναι η ίδια με την List ως προς τις τιμές της, αλλα διαφορετική ως προς τις τοποθεσίες μνήμης.
+template <class Entry_Type> SL_List<Entry_Type> Copy(SL_List<Entry_Type> List)
 {
 	SL_List<Entry_Type> Output;
 	SL_Node<Entry_Type>* New_Head, New_Tail, Old_Iterator;
@@ -783,7 +783,7 @@ template <class Entry_Type> SL_List<Entry_Type> Copy(SL_List<Entry_Type> List) /
 	}
 	return Output;
 }
-template <class Entry_Type> SL_List<Entry_Type> Concatenate(SL_List<Entry_Type> List_1, SL_List<Entry_Type> List_2) // Ενώνει δύο λίστες (χωρίς αλλαγή στις τοποθεσίες μνήμης)
+template <class Entry_Type> SL_List<Entry_Type> Concatenate(SL_List<Entry_Type> List_1, SL_List<Entry_Type> List_2)
 {
 	SL_List<Entry_Type> Concatenated_List;
 	(*(List_1.Tail)).Next = List_2.Head;
@@ -794,7 +794,7 @@ template <class Entry_Type> SL_List<Entry_Type> Concatenate(SL_List<Entry_Type> 
 	delete(List_2.Head);
 	return Concatenated_List;
 }
-template <class Entry_Type> SL_List<Entry_Type> Concatenate(SL_List<Entry_Type> List_1, SL_List<Entry_Type> List_2, int position, char Command) // Προσθέτει την List_2 μετά η πριν (με βάση την παράμετρο Command) την List_1
+template <class Entry_Type> SL_List<Entry_Type> Concatenate(SL_List<Entry_Type> List_1, SL_List<Entry_Type> List_2, int position, char Command)
 {
 	SL_List<Entry_Type> Result;
 	int Command_Int = 0;
@@ -835,23 +835,23 @@ template <class Entry_Type> SL_List<Entry_Type> Concatenate(SL_List<Entry_Type> 
 		}
 	}
 }
-template <class Entry_Type> SL_List<Entry_Type> New_Concatenate(SL_List<Entry_Type> List_1, SL_List<Entry_Type> List_2) // Ίδια με την Concatenate αλλά σε διαφορετικές θέσεις μνήμης.
+template <class Entry_Type> SL_List<Entry_Type> New_Concatenate(SL_List<Entry_Type> List_1, SL_List<Entry_Type> List_2)
 {
 	SL_List<Entry_Type> New_Concatenate = Copy(Concatenate(List_1, List_2));
 	return New_Concatenate;
 }
-template <class Entry_Type> SL_List<Entry_Type> New_Concatenate(SL_List<Entry_Type> List_1, SL_List<Entry_Type> List_2, int position, char Command) // Ίδια με την Concatenate αλλά σε διαφορετικές θέσεις μνήμης.
+template <class Entry_Type> SL_List<Entry_Type> New_Concatenate(SL_List<Entry_Type> List_1, SL_List<Entry_Type> List_2, int position, char Command)
 {
 	SL_List New_Concatenate = Copy(Concatenate(List_1, List_2, position, Command));
 	return New_Concatenate;
 }
-template <class Entry_Type> SL_List<Entry_Type> Convert(int array_list[], int size) // Μετατρέπει έναν πίνακα σε συνδεδεμένη λίστα.
+template <class Entry_Type> SL_List<Entry_Type> Convert(int array_list[], int size)
 {
 	SL_List<Entry_Type> Output;
 	for (int i = 0; i < size; ++i) Output.Insert(array_list[i]);
 	return Output;
 }
-template <class Entry_Type> bool Are_Equal(SL_List<Entry_Type> List_1, SL_List<Entry_Type> List_2) // Επιστρέφει αληθής/ψευδής για το αν δύο λίστες έχουν τα ίδια δεδομένα.
+template <class Entry_Type> bool Are_Equal(SL_List<Entry_Type> List_1, SL_List<Entry_Type> List_2)
 {
 	SL_Node<Entry_Type>* Iterator_1;
 	SL_Node<Entry_Type>* Iterator_2;

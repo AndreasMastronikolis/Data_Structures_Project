@@ -37,7 +37,7 @@ template <class Entry_Type> class SL_List
 			(*previous).Next = NULL;
 			delete current;
 		}
-		void Delete_Head() // Διαγραφή του πρώτου στοιχείου της λίστας.
+		void Delete_Head()
 		{
 			SL_Node<Entry_Type>* Old_Head;
 			Old_Head = Head;

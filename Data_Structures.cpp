@@ -1,30 +1,44 @@
-﻿#include <iostream>
+#include <iostream>
 
 /* Singly Linked Lists, Doubly Linked Lists, Stacks and Queues */
 
 template <class Entry_Type> struct DL_Node
+/* In this struct, we model a single block of the doubly linked list 
+we wish to instantiate. The block contains a variable about the information
+it contains and two pointers to the next and previous blocks */
 {
-	Entry_Type Data;
-	DL_Node* Next;
-	DL_Node* Previous;
+	Entry_Type Data; /* This entry contains the data of the node*/
+	DL_Node* Next; /* This struct variable contains a pointer of the next node*/
+	DL_Node* Previous; /* This struct variable contains a pointer of the previous node*/
 };
 template <class Entry_Type> struct SL_Node
+/* In this struct, we model a single block of the singly linked list
+we wish to instantiate. The block contains a variable about the information
+it contains and one pointer to the next block */
 {
-	int Data;
-	SL_Node* Next;
+	Entry_Type Data; /* This entry contains the data of the node*/
+	SL_Node* Next; /* This struct variable contains a pointer of the next node*/
 };
 
 template <class Entry_Type> class SL_List
+
+/* An instance of this class is representing a single singly linked 
+list. It contains the private functions and public variables and 
+functions illustrated below: */
+
 {
 	private:
-		void Insert_At_Start(int value)
+		void Insert_At_Start(Entry_Type Value)
+		/* This private function inserts a single block in the beginning 
+		of the list (Pointer Head) with the data Value, indicated above */
 		{
-			SL_Node<Entry_Type>* New_SL_Node = new SL_Node<Entry_Type>;
-			(*New_SL_Node).Data = value;
-			(*New_SL_Node).Next = Head;
-			Head = New_SL_Node;
+			SL_Node<Entry_Type>* New_SL_Node = new SL_Node<Entry_Type>; /* We dynamically allocate the instantiated pointer */
+			(*New_SL_Node).Data = Value; /* We store it in the data Value */
+			(*New_SL_Node).Next = Head; /* We assign that the next block should be the current head */
+			Head = New_SL_Node; /* We make this block the new Head */
 		}
 		void Delete_Tail()
+		/* This private function deletes the last block of the list (Pointer Tail) */
 		{
 			SL_Node<Entry_Type>* current, previous = NULL;
 			current = Head;
@@ -38,31 +52,45 @@ template <class Entry_Type> class SL_List
 			delete current;
 		}
 		void Delete_Head()
+		/* This private function deletets the block Head of the list (Pointer Head) */
 		{
-			SL_Node<Entry_Type>* Old_Head;
-			Old_Head = Head;
-			Head = (*Head).Next;
-			delete Old_Head;
+			SL_Node<Entry_Type>* Old_Head; /* We instantiate a pointer which will point to the old Head */
+			Old_Head = Head; /* We assign the Old_Head the pointer of the current Head */
+			Head = (*Head).Next; /* We change the current Head to the block right next to it */
+			delete Old_Head; /* We delete the information stored in the old Head */
 		}
 	public:
-		unsigned long int Size = 0;
 		SL_Node<Entry_Type>* Head, * Tail;
-		SL_List() { Head = NULL; Tail = NULL; Size = 0; }
+		unsigned long int Size = 0;
+		SL_List() 
+		/* We call a constructor that assigns 
+		the values NULL to the Nodes Head and Tail since
+		the list, when it is instantiated doesn't have any elements */
+		{ 
+			Head = NULL; /* Assignment of NULL to Head */
+			Tail = NULL; /* Assignment of NULL to Tail */
+			Size = 0;  /* Assignment of 0 to Size (the List has no elements) */
+		}
 		SL_List(Entry_Type array_list[], int Size)
+		/* This constructor attempts to initialize the list 
+		via a predefined array. The list will contain the elements
+		of the array array_list[] (of size Size) in increasing order. */
 		{
-			Head = NULL;
+			Head = NULL; /* Standard assignments of NULL to Head and Tail */
 			Tail = NULL;
-			for (int i = 0; i < Size; i++)
+			for (int i = 0; i < Size; i++) /* For elements in the array */
 			{
-				(*this).Insert(array_list[i]);
+				(*this).Insert_At_Start(array_list[i]); /* We insert the i-th element of the array */
 			}
 		}
-		void Insert(int value, char Ins_Mode = 'T')
+		void Insert(Entry_Type value, char Ins_Mode = 'T')
 		{
-			SL_Node<Entry_Type>* New_SL_Node = new SL_Node<Entry_Type>;
+			SL_Node<Entry_Type>* New_SL_Node = new SL_Node<Entry_Type>; /* We dynamically allocate the New_SL_Node */
 			(*New_SL_Node).Data = value;
 
 			if (Ins_Mode == 'T')
+			/* The Mode T stands for Tail_Insertion. Given this command, the block
+			with data Value will be added to as a Tail to the List */
 			{
 				(*New_SL_Node).Next = NULL;
 				if (Head == NULL)
@@ -86,7 +114,9 @@ template <class Entry_Type> class SL_List
 			}
 			Size++;
 		}
-		void Insert(int value, int position)
+		void Insert(Entry_Type value, int position)
+		/* This public functions aims to insert an element with data value at a 
+		pre-specified position by the user (indicated by the variable position). */
 		{
 			SL_Node<Entry_Type>* Iterator;
 			SL_Node<Entry_Type>* dummy;
@@ -105,7 +135,9 @@ template <class Entry_Type> class SL_List
 				(*temp).Next = Iterator;
 			}
 		}
-		void Delete(int position)
+		void Delete(int position) 
+		/* This public function aims to delete an element at a
+		pre-specified position by the user (indicated by the variable position). */
 		{
 			SL_Node<Entry_Type>* Iterator, previous;
 			int size = (*this).Get_Size();
@@ -126,6 +158,11 @@ template <class Entry_Type> class SL_List
 			Size--;
 		}
 		void Print(char Mode = 'F')
+		/* This public function aims to print the entire list. The are several modes
+		associated with the function. The F Mode stands for Full_Print, and the output
+		is a presentation of the list as an ordered set of blocks with data at an allocated 
+		memory in RAM. The V Mode stands for Values_Only and omitts the memory locations. The
+		L mode stands for Locations, and prints only the locations of the nodes in RAM. */
 		{
 			SL_Node<Entry_Type>* Iterator;
 			Iterator = Head;
@@ -201,6 +238,8 @@ template <class Entry_Type> class SL_List
 			std::cout << '\n';
 		}
 		void Reverse()
+		/* This public function aims to reverse the order of the entire singly linked 
+		list. */
 		{
 			SL_Node<Entry_Type>* Back = NULL;
 			SL_Node<Entry_Type>* Middle = NULL;
@@ -218,6 +257,8 @@ template <class Entry_Type> class SL_List
 			}
 		}
 		void Swap(int position_1, int position_2)
+		/* This public function aims to swap two nodes in the list, found at positions 
+		position_1 and position_2, respectively. */
 		{
 			SL_Node<Entry_Type>* SL_Node_1;
 			SL_Node<Entry_Type>* SL_Node_2;
@@ -229,7 +270,9 @@ template <class Entry_Type> class SL_List
 			(*SL_Node_2).Data = (*SL_Node_1).Data;
 			(*SL_Node_1).Data = BkpData;
 		}
-		void Remove(int value)
+		void Remove(Entry_Type value)
+		/* This public function aims to remove an element with data value. I implement
+		a simple sequential search algorithm to find the node with data value. */
 		{
 			SL_List<Entry_Type> temp = (*this).Linear_Search(value);
 			int size = temp.Get_Size();
@@ -243,7 +286,10 @@ template <class Entry_Type> class SL_List
 				Iterator = (*Iterator).Next;
 			}
 		}
-		SL_List Linear_Search(int value)
+		SL_List Linear_Search(Entry_Type value)
+		/* This public function aims to find the position of an element with data value. It is
+		essentially a sequently search algorithm with a time-complexity of O(n); the symbols here have 
+		their ususal meanings. */
 		{
 			SL_List<Entry_Type> Index_List;
 			SL_Node<Entry_Type>* Iterator;
@@ -261,6 +307,8 @@ template <class Entry_Type> class SL_List
 			return Index_List;
 		}
 		int Get_Interval(int lower_limit, int upper_limit)
+		/* This public function returns the number of elements that are in the closed interval 
+		[lower_limit, upper_limit].  */
 		{
 			int counter = 0;
 			SL_Node<Entry_Type>* Iterator;
@@ -272,16 +320,19 @@ template <class Entry_Type> class SL_List
 			}
 			return counter;
 		}
-		int Get_Size()
+		int Get_Size() 
+		/* This public function returns the Size of the list. */
 		{
 			return Size;
 		}
 		bool is_Empty()
+		/* This public function returns whether the list is empty or not. */
 		{
 			if (Head == NULL && Tail == NULL) return true;
 			else return false;
 		}
-		bool Does_Contain(int value)
+		bool Does_Contain(Entry_Type value)
+		/* This public function returns true/false on if the list contains an element with the specified value */
 		{
 			SL_Node<Entry_Type>* Iterator;
 			Iterator = Head;
@@ -296,7 +347,8 @@ template <class Entry_Type> class SL_List
 			if (position < (*this).Get_Size()) return true;
 			else return false;
 		}
-		Entry_Type Get_Max()
+		Entry_Type Get_Max() 
+		/* This public function returns the maximum value of the list. */
 		{
 			int Maximum_Int;
 			Maximum_Int = INT32_MIN;
@@ -310,6 +362,7 @@ template <class Entry_Type> class SL_List
 			return Maximum_Int;
 		}
 		Entry_Type Get_Min()
+		/* This public function minimum value of the list */
 		{
 			int Maximum_Int;
 			Maximum_Int = INT32_MAX;
@@ -323,6 +376,7 @@ template <class Entry_Type> class SL_List
 			return Maximum_Int;
 		}
 		bool is_Sorted()
+		/* This public function returns true/false on if the list is sorted or not. */
 		{
 			int x = INT32_MIN;
 			SL_Node<Entry_Type>* Iterator;
@@ -718,6 +772,7 @@ template <class Entry_Type> class DL_List
 		}
 };
 template <class Entry_Type> class Stack
+/* This class is an implementation of a Stack via Linked Lists. */
 {
 	DL_List<Entry_Type> List;
 	public:
@@ -747,6 +802,7 @@ template <class Entry_Type> class Stack
 		}
 };
 template <class Entry_Type> class Queue
+/* This public function is an implementation of a Queque via Linked Lists. */
 {
 	private:
 		DL_List<Entry_Type> List;
@@ -803,7 +859,7 @@ template <class Entry_Type> SL_List<Entry_Type> Concatenate(SL_List<Entry_Type> 
 
 	if (position < 0 || position > List_1.Get_Size())
 	{
-		std::cout << "Warning: The position parameter on Concatenate out of bounds. The Concatenate instruction was scrapped." << std::endl;
+		std::cout << "Warning: The position parameter on Concatenate is out of bounds. The Concatenate instruction was scrapped." << std::endl;
 		return Result;
 	}
 	else

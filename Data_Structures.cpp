@@ -1,6 +1,14 @@
-#include <iostream>
+/* 
 
-/* Singly Linked Lists, Doubly Linked Lists, Stacks and Queues */
+This is an on-going project where I am trying to implement various Data Structures in C++ so that I can
+sharpen my alorithimic thinking and develop an good understanding of data structures. So far, I have implemented
+Singly and Doubly Linked Lists, Stacks and Queues (Although some of those still need improvements).
+
+Author: Andreas Mastronikolis.
+
+*/
+
+#include <iostream>
 
 template <class Entry_Type> struct DL_Node
 /* In this struct, we model a single block of the doubly linked list 

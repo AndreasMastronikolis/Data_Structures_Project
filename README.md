@@ -13,3 +13,6 @@ Singly and Doubly Linked Lists, Stacks and Queues (although some of those still 
 * Reverse(): Reverses the order of the list.
 * Swap(position_1, position_2): Swaps the order of two nodes at indices position_1 and position_2.
 * Clear(): Clears the list.
+* Bubble_Sort(): Executes the Bubble Sort algorithm (https://en.wikipedia.org/wiki/Bubble_sort)
+* Insertion_Sort(): Executes the Insertion Sort algorithm (https://en.wikipedia.org/wiki/Insertion_sort)
+* Selection_Sort(): Executes the Selection Sort algorithm (https://en.wikipedia.org/wiki/Selection_sort)
